@@ -1,0 +1,528 @@
+---
+title: "Immigration, Gender, and Citizenship Wage Disparities"
+subtitle: "Exploratory & Diagnostic Visualizations"
+author: "David Rios"
+date: "Spring 2025"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: flatly
+    code-fold: show
+editor: visual
+---
+
+# Overview
+
+This document generates figures, non-parametric returns to education, industry representation metrics, and model diagnostic plots for my research paper on gender, citizenship, and wage disparities in the U.S. labor market. 
+
+The data are a pooled cross-section of the 2012--2019 American Community Survey (ACS). Every model-based figure is generated from the paper's **preferred specification**, estimated identically to `02_Regressions_and_Stats.do`.
+
+Household income is deliberately excluded. Race/ethnicity is included alongside the birthplace fixed effects: birthplace absorbs origin-country factors and immigrant selection, while race absorbs racial stratification within and across origin groups.
+
+# Libraries
+
+```{r}
+#| message: false
+#| warning: false
+
+library(here)
+library(tidyverse)
+library(haven)
+library(scales)
+library(viridis)
+library(mgcv)
+library(hexbin)
+library(fixest)
+library(broom)
+```
+
+# Data Import & Cleaning
+
+```{r}
+#| message: false
+#| warning: false
+
+# here() resolves from the .Rproj at the repo root, so this works for anyone
+# who clones the repo without editing a hardcoded path.
+acs_data <- haven::read_dta(here::here("Data", "clean", "clean_data.dta"))
+
+# Filter wages & create log wage
+acs_data <- acs_data %>%
+  filter(incwage_adj > 0) %>%
+  mutate(ln_wage = log(incwage_adj))
+
+# Recode Demographic & Citizenship Labels
+acs_data <- acs_data %>%
+  mutate(
+    citizen_cat_clean = as.numeric(citizen_cat),
+    citizen_label = case_when(
+      citizen_cat_clean == 0 ~ "Native Citizen",
+      citizen_cat_clean == 1 ~ "Naturalized Citizen",
+      citizen_cat_clean == 2 ~ "Non-Citizen",
+      TRUE ~ "Native Citizen"
+    ),
+    sex_label = ifelse(sex == 1, "Male", "Female"),
+    citizen_sex_lbl = case_when(
+      citizen_cat_clean == 2 & sex == 2 ~ "Non-Citizen Female",
+      citizen_cat_clean != 2 & sex == 2 ~ "Citizen Female",
+      citizen_cat_clean == 2 & sex == 1 ~ "Non-Citizen Male",
+      citizen_cat_clean != 2 & sex == 1 ~ "Citizen Male"
+    )
+  )
+
+# Education: grouped attainment 
+acs_data <- acs_data %>%
+  mutate(
+    educ_years = case_when(
+      educ == 0         ~ 0,   # N/A or no schooling
+      educ == 1         ~ 2,   # Nursery to Grade 4
+      educ == 2         ~ 6,   # Grade 5-8
+      educ == 3         ~ 9,   # Grade 9
+      educ == 4         ~ 10,  # Grade 10
+      educ == 5         ~ 11,  # Grade 11
+      educ == 6         ~ 12,  # Grade 12 (HS Diploma)
+      educ == 7         ~ 13,  # 1 yr college
+      educ == 8         ~ 14,  # 2 yrs college
+      educ == 9         ~ 15,  # 3 yrs college
+      educ == 10        ~ 16,  # 4 yrs college (Bachelor's)
+      educ == 11        ~ 18,  # 5+ yrs college (Graduate degree)
+      TRUE              ~ NA_real_
+    ),
+    educ_grouped = case_when(
+      educ <= 6              ~ "HS or Less",
+      educ %in% c(7, 8, 9)   ~ "Some College",
+      educ %in% c(10, 11)    ~ "Bachelor's or Higher"
+    ),
+    educ_grouped = factor(educ_grouped,
+                          levels = c("HS or Less", "Some College", "Bachelor's or Higher"))
+  )
+
+# English Fluency & Children Groups
+acs_data <- acs_data %>%
+  mutate(
+    eng_fluency = case_when(
+      speakeng %in% c(3, 4) ~ "Fluent",
+      speakeng %in% c(2, 5) ~ "Intermediate",
+      speakeng %in% c(1, 6) ~ "Limited"
+    ),
+    eng_fluency = factor(eng_fluency, levels = c("Fluent", "Intermediate", "Limited")),
+    nchild_grouped = case_when(
+      nchild == 0            ~ "None",
+      nchild == 1            ~ "One",
+      nchild == 2            ~ "Two",
+      nchild %in% c(3, 4)    ~ "Three-Four",
+      nchild >= 5            ~ "Five+"
+    ),
+    nchild_grouped = factor(nchild_grouped,
+                            levels = c("None", "One", "Two", "Three-Four", "Five+"))
+  )
+
+# Income Groups 
+acs_data <- acs_data %>%
+  mutate(
+    income_tertile = ntile(incwage_adj, 3),
+    income_group = case_when(
+      income_tertile == 1 ~ "Low",
+      income_tertile == 2 ~ "Medium",
+      income_tertile == 3 ~ "High"
+    ),
+    income_group = factor(income_group, levels = c("High", "Medium", "Low"))
+  )
+
+# Industry & Birthplace
+acs_data <- acs_data %>%
+  mutate(
+    industry_name   = as.character(haven::as_factor(industry_encoded)),
+    birthplace_label = haven::as_factor(birthplace)
+  )
+
+# Compute Industry Ratio Metrics
+ratio_data_detailed <- acs_data %>%
+  filter(!is.na(industry_name)) %>%
+  group_by(industry_name, citizen_label) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  pivot_wider(
+    names_from = citizen_label,
+    values_from = count,
+    values_fill = 0
+  ) %>%
+  mutate(
+    ratio_nat = `Naturalized Citizen` / `Native Citizen`,
+    ratio_non = `Non-Citizen` / `Native Citizen`
+  ) %>%
+  arrange(desc(ratio_nat + ratio_non))
+
+ratio_long <- ratio_data_detailed %>%
+  select(industry_name, ratio_nat, ratio_non) %>%
+  pivot_longer(
+    cols = starts_with("ratio"),
+    names_to = "Group",
+    values_to = "Ratio"
+  ) %>%
+  mutate(
+    Group = recode(
+      Group,
+      ratio_nat = "Naturalized Citizen",
+      ratio_non = "Non-Citizen"
+    )
+  )
+
+# Center Age at the (unweighted) sample mean
+mean_age <- mean(acs_data$age, na.rm = TRUE)
+acs_data <- acs_data %>%
+  mutate(
+    age_c    = age - mean_age,
+    age_c_sq = age_c^2
+  )
+
+# Preferred Specification 
+full_fe_model <- feols(
+  ln_wage ~ factor(citizen_cat_clean) * factor(sex) +
+    age_c + age_c_sq +
+    educ_grouped +
+    eng_fluency +
+    nchild_grouped +
+    factor(rachsing) |
+    year + industry_encoded + puma_state + birthplace,
+  cluster = ~puma_state,
+  data = acs_data
+)
+
+etable(full_fe_model, digits = 4)
+
+# Extract Fitted Values and Residuals for Diagnostics
+model_diagnostics <- data.frame(
+  fitted_values = fitted(full_fe_model),
+  residuals     = residuals(full_fe_model)
+)
+```
+
+
+# Figures
+
+## Figure 1: Log Wage Transformation & Distributional Symmetry
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4.5
+
+fig1 <- acs_data %>%
+  select(incwage_adj, ln_wage) %>%
+  pivot_longer(cols = everything(), names_to = "metric", values_to = "value") %>%
+  mutate(metric = ifelse(metric == "incwage_adj", "Raw Annual Wages ($2015)", "Log Annual Wages")) %>%
+  ggplot(aes(x = value, fill = metric)) +
+  geom_density(alpha = 0.6, show.legend = FALSE) +
+  facet_wrap(~metric, scales = "free") +
+  scale_fill_manual(values = c("Log Annual Wages" = "#21618c", "Raw Annual Wages ($2015)" = "#e74c3c")) +
+  labs(
+    title = "Distributional Transformation of Wages",
+    subtitle = "Demonstrating Skewness Reduction via Natural Log Transformation",
+    x = "Value",
+    y = "Density"
+  ) +
+  theme_minimal(base_size = 11)
+
+fig1
+```
+
+
+
+## Figure 2: Foreign-Born Demographic Diversity by Birthplace
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+
+birthplace_counts <- acs_data %>%
+  filter(!birthplace_label %in% c("U.S. & Territories", "Other/Unknown", "N/A")) %>%
+  count(birthplace_label) %>%
+  arrange(desc(n))
+
+fig2 <- ggplot(birthplace_counts, aes(x = reorder(birthplace_label, -n), y = n)) +
+  geom_bar(stat = "identity", fill = "#21618c") +
+  geom_text(aes(label = comma(n)), vjust = -0.3, size = 3) +
+  labs(
+    title = "Demographic Diversity by Birthplace (Foreign-Born Only)",
+    x = "Birthplace Region",
+    y = "Count of Individuals") +
+  scale_y_continuous(labels = label_comma(), expand = expansion(mult = c(0, 0.1))) +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 9))
+
+fig2
+```
+
+
+
+## Figure 3: Industry Concentration by Citizenship Status
+
+```{r}
+#| fig-width: 9
+#| fig-height: 5
+
+fig3 <- ggplot(ratio_long, aes(x = reorder(industry_name, Ratio), y = Ratio, fill = Group)) +
+  geom_col(position = "stack", width = 0.8) +
+  coord_flip() +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1), expand = expansion(mult = c(0, 0.05))) +
+  scale_fill_viridis_d(option = "G", begin = 0.2, end = 0.8) +
+  labs(
+    title = "Foreign-Born Worker Concentration by Industry and Citizenship Status",
+    subtitle = "Ratio of Foreign-Born Workers relative to Native-Born Citizen Workers (ACS 2012-2019)",
+    x = "Industry Sector",
+    y = "Ratio to Native-Born Citizen Workers (%)",
+    fill = "Citizenship Status"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    legend.position = "right",
+    panel.grid.minor = element_blank()
+  )
+
+fig3
+```
+
+
+## Figure 4: Intersectional Income Group Distribution
+
+```{r}
+#| fig-width: 10
+#| fig-height: 6
+
+educ_income_intersectional <- acs_data %>%
+  filter(!is.na(educ_grouped)) %>%
+  group_by(educ_grouped, income_group, citizen_label, sex_label) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  group_by(educ_grouped, citizen_label, sex_label) %>%
+  mutate(percent = count / sum(count) * 100)
+
+fig4 <- ggplot(educ_income_intersectional, aes(x = educ_grouped, y = percent, fill = income_group)) +
+  geom_bar(stat = "identity", position = "stack") +
+  scale_fill_viridis_d(name = "Income Tertile", option = "D") +
+  labs(
+    title = "Income Group Distribution by Gender, Citizenship, and Education",
+    x = "Educational Attainment Group",
+    y = "Percentage within Group"
+  ) +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(angle = 30, hjust = 1, size = 8),
+    strip.text = element_text(size = 10, face = "bold")
+  ) +
+  facet_grid(sex_label ~ citizen_label)
+
+fig4
+```
+
+
+
+## Figure 5: Non-Parametric Returns to Education (GAM Fit)
+
+```{r}
+#| fig-width: 9
+#| fig-height: 5.5
+#| warning: false
+
+fig5 <- ggplot(acs_data, aes(x = educ_years, y = ln_wage, color = citizen_sex_lbl, fill = citizen_sex_lbl)) +
+  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), se = TRUE, alpha = 0.12, linewidth = 1.1) +
+  scale_color_viridis_d(option = "plasma", name = "Demographic Group") +
+  scale_fill_viridis_d(option = "plasma", name = "Demographic Group") +
+  scale_x_continuous(breaks = seq(0, 18, by = 2)) +
+  labs(
+    title = "Non-Parametric Returns to Education by Citizenship & Gender",
+    subtitle = "Pooled ACS 2012-2019 (GAM Smoothed Fit)",
+    x = "Years of Formal Education",
+    y = "Log Wage (2015 Constant USD)"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(legend.position = "bottom")
+
+fig5
+```
+
+
+## Figure 6: Model Diagnostic: Residuals vs. Fitted Log Wages
+
+```{r}
+#| fig-width: 8.5
+#| fig-height: 5
+
+fig6 <- ggplot(model_diagnostics, aes(x = fitted_values, y = residuals)) +
+  geom_hex(bins = 60) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "#e74c3c", linewidth = 0.8) +
+  scale_fill_viridis_c(option = "magma", trans = "log10", name = "Observation Count\n(Log Scale)") +
+  labs(
+    title = "Model Diagnostic: Residuals vs. Fitted Log Wages",
+    subtitle = paste0("Preferred Specification, Hexagonal Binning (N = ",
+                      comma(nrow(model_diagnostics)), ")"),
+    x = "Fitted Log Wages",
+    y = "Residuals"
+  ) +
+  theme_minimal(base_size = 11)
+
+fig6
+```
+
+## Figure 7: Coefficient Estimates with Clustered 95% CIs
+
+```{r}
+#| fig-width: 9
+#| fig-height: 6
+
+model_coefs <- tidy(full_fe_model, conf.int = TRUE)
+
+model_coefs_clean <- model_coefs %>%
+  filter(!term %in% c("(Intercept)", "age_c", "age_c_sq")) %>%
+  mutate(
+    term_clean = case_when(
+      term == "factor(citizen_cat_clean)1" ~ "Naturalized Citizen",
+      term == "factor(citizen_cat_clean)2" ~ "Non-Citizen",
+      term == "factor(sex)2" ~ "Female",
+      term == "educ_groupedSome College" ~ "Some College",
+      term == "educ_groupedBachelor's or Higher" ~ "Bachelor's or Higher",
+      term == "eng_fluencyIntermediate" ~ "English: Intermediate",
+      term == "eng_fluencyLimited" ~ "English: Limited",
+      term == "nchild_groupedOne" ~ "Children: One",
+      term == "nchild_groupedTwo" ~ "Children: Two",
+      term == "nchild_groupedThree-Four" ~ "Children: Three-Four",
+      term == "nchild_groupedFive+" ~ "Children: Five+",
+      term == "factor(rachsing)2" ~ "Race: Black",
+      term == "factor(rachsing)3" ~ "Race: Amer. Indian/AK Native",
+      term == "factor(rachsing)4" ~ "Race: Asian/Pacific Islander",
+      term == "factor(rachsing)5" ~ "Race: Hispanic/Latino",
+      term == "factor(citizen_cat_clean)1:factor(sex)2" ~ "Naturalized x Female",
+      term == "factor(citizen_cat_clean)2:factor(sex)2" ~ "Non-Citizen x Female",
+      TRUE ~ term
+    )
+  )
+
+# Plot vertical coefficient plot
+fig7 <- ggplot(model_coefs_clean, aes(x = estimate, y = reorder(term_clean, estimate))) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "#e74c3c", linewidth = 0.8) +
+  geom_pointrange(
+    aes(xmin = conf.low, xmax = conf.high),
+    color = "#21618c",
+    size = 0.6,
+    fatten = 2.5
+  ) +
+  labs(
+    title = "Preferred Specification: Coefficient Estimates with Clustered 95% CIs",
+    subtitle = "Year, Industry, Birthplace, and PUMA-State FE; SEs Clustered on PUMA-State",
+    x = "Log Wage Impact (Estimate & 95% CI)",
+    y = "Demographic & Human Capital Variable"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    plot.title = element_text(size = 12, face = "bold"),
+    plot.subtitle = element_text(size = 9.5, color = "grey30"),
+    panel.grid.minor = element_blank(),
+    axis.text.y = element_text(size = 9, color = "black")
+  )
+
+fig7
+```
+
+
+## Figure 8: Spatial Coverage of the PUMA-State Cluster Sample
+
+Official Census Bureau TIGER/Line cartographic boundaries via `tigris`.
+
+```{r}
+#| fig-width: 9
+#| fig-height: 5.5
+#| message: false
+#| warning: false
+
+library(tigris)
+library(sf)
+options(tigris_use_cache = TRUE)
+
+sampled_pumas <- acs_data %>%
+  distinct(statefip, puma) %>%
+  mutate(GEOID10 = sprintf("%02d%05d", as.integer(statefip), as.integer(puma)))
+
+cat("Sampled PUMA-state geographies:", nrow(sampled_pumas), "\n")
+
+# 2010-definition PUMA boundaries, all states
+pumas_all <- tryCatch(
+  pumas(cb = TRUE, year = 2019),
+  error = function(e) {
+    purrr::map_dfr(unique(fips_codes$state_code[as.integer(fips_codes$state_code) <= 72]),
+                   ~ tryCatch(pumas(state = .x, cb = TRUE, year = 2019),
+                              error = function(e) NULL))
+  }
+)
+
+pumas_all <- pumas_all %>%
+  # Drop island-territory PUMAs (AS/GU/MP/VI)
+  filter(!STATEFP10 %in% c("60", "66", "69", "78")) %>%
+  shift_geometry() %>%  # rescale AK/HI/PR into a compact national frame
+  mutate(sampled = factor(GEOID10 %in% sampled_pumas$GEOID10,
+                          levels = c(TRUE, FALSE),
+                          labels = c("Sampled (118 PUMAs)", "Not sampled")))
+
+states_all <- states(cb = TRUE, year = 2019) %>%
+  filter(!STUSPS %in% c("AS", "GU", "MP", "VI")) %>%
+  shift_geometry()
+
+fig8 <- ggplot() +
+  geom_sf(data = pumas_all, aes(fill = sampled), color = NA) +
+  geom_sf(data = states_all, fill = NA, color = "grey40", linewidth = 0.2) +
+  scale_fill_manual(values = c("Sampled (118 PUMAs)" = "#21618c",
+                               "Not sampled" = "grey90"),
+                    name = NULL) +
+  labs(
+    title = "Geographic Coverage of the 5% PUMA-State Cluster Sample",
+    subtitle = "2010-Definition PUMAs; Sampled Geographies Shaded (ACS 2012-2019)"
+  ) +
+  theme_void(base_size = 11) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(size = 12, face = "bold"),
+    plot.subtitle = element_text(size = 9.5, color = "grey30")
+  )
+
+fig8
+```
+
+
+# Saving Images
+
+```{r}
+dir.create(here("Output", "figures"), recursive = TRUE, showWarnings = FALSE)
+
+save_fig <- function(filename, plot_obj, w, h) {
+  ggsave(
+    filename = here("Output", "figures", filename),
+    plot = plot_obj,
+    width = w, height = h,
+    dpi = 300, bg = "white"
+  )
+}
+
+save_fig("Figure_1_Log_Wages.png",       fig1, 8,   4.5)
+save_fig("Figure_2_Birthplace.png",      fig2, 8,   5)
+save_fig("Figure_3_Industry.png",        fig3, 9,   5)
+save_fig("Figure_4_Income.png",          fig4, 10,  6)
+save_fig("Figure_5_Returns_to_Educ.png", fig5, 9,   5.5)
+save_fig("Figure_6_Diagnostics.png",     fig6, 8.5, 5)
+save_fig("Figure_7_Coefficients.png",    fig7, 9,   6)
+save_fig("Figure_8_PUMA_Map.png",        fig8, 9,   5.5)
+
+# PDF versions used directly by Paper/paper.tex
+save_pdf <- function(filename, plot_obj, w, h) {
+  ggsave(
+    filename = here("Paper", filename),
+    plot = plot_obj,
+    width = w, height = h, bg = "white"
+  )
+}
+
+save_pdf("fig1_industry_ratio.pdf", fig3, 9,   5)
+save_pdf("fig2_birthplace.pdf",     fig2, 8,   5)
+save_pdf("fig3_income_dist.pdf",    fig4, 10,  6)
+save_pdf("fig4_returns_educ.pdf",   fig5, 9,   5.5)
+save_pdf("fig5_coefplot.pdf",       fig7, 9,   6)
+save_pdf("fig6_log_wages.pdf",      fig1, 8,   4.5)
+save_pdf("fig7_puma_map.pdf",       fig8, 9,   5.5)
+```
