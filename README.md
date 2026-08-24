@@ -6,7 +6,7 @@ paper: ``To what extent are gender and citizenship wage disparities driven by di
 | File / folder | Contents |
 |---|---|
 | `Code/01_Data_Cleaning.do` | Builds the analysis sample from the raw IPUMS extract |
-| `Code/02_Regressions_and_Stats.do` | Descriptive statistics, the three main regressions (unweighted + `perwt`-weighted), two-fold pooled Oaxaca decompositions with clustered SEs, decomposition and diagnostic graphs |
+| `Code/02_Regressions_and_Stats.do` | Descriptive statistics, main regressions, two-fold pooled Oaxaca decompositions with clustered SEs, decomposition and diagnostic graphs |
 | `Code/03_Graphs.qmd` | Quarto/R figures|
 | `Paper/` | `paper.tex`, `references.bib`, and all figure PDFs used by the manuscript |
 | `Output/figures/`, `Output/tables/` | Generated PNG figures and `outreg2` tables |
