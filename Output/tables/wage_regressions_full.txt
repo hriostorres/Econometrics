@@ -1,0 +1,79 @@
+Full Coefficient Estimates			
+		(1)	(2)
+VARIABLES	LABELS	M5	M6
+			
+1.citizen_cat	Citizenship Status = 1, Naturalized Citizen	-0.004	-0.002
+		(0.017)	(0.013)
+2.citizen_cat	Citizenship Status = 2, Non-Citizen	-0.071***	-0.059***
+		(0.018)	(0.014)
+2.sex	sex = 2, female	-0.461***	-0.260***
+		(0.009)	(0.006)
+0b.citizen_cat#1b.sex		0.000	0.000
+		(0.000)	(0.000)
+0b.citizen_cat#2o.sex		0.000	0.000
+		(0.000)	(0.000)
+1o.citizen_cat#1b.sex		0.000	0.000
+		(0.000)	(0.000)
+1.citizen_cat#2.sex		0.067***	0.040***
+		(0.017)	(0.011)
+2o.citizen_cat#1b.sex		0.000	0.000
+		(0.000)	(0.000)
+2.citizen_cat#2.sex		-0.012	0.016*
+		(0.012)	(0.008)
+age_c	Age (centered at mean)	0.016***	0.010***
+		(0.000)	(0.000)
+age_c_sq	Age Squared (centered at mean)	-0.001***	-0.001***
+		(0.000)	(0.000)
+2.educ_grouped	Educational Attainment Group = 2, Some College	0.186***	0.135***
+		(0.005)	(0.003)
+3.educ_grouped	Educational Attainment Group = 3, Bachelor's or Higher	0.569***	0.467***
+		(0.009)	(0.006)
+2.eng_fluency	English Fluency Group = 2, Intermediate	-0.189***	-0.166***
+		(0.010)	(0.008)
+3.eng_fluency	English Fluency Group = 3, Limited	-0.334***	-0.285***
+		(0.018)	(0.015)
+1.nchild_grouped	Number of Children Group = 1, One	-0.015***	0.004
+		(0.004)	(0.003)
+2.nchild_grouped	Number of Children Group = 2, Two	-0.036***	0.034***
+		(0.005)	(0.004)
+3.nchild_grouped	Number of Children Group = 3, Three-Four	-0.096***	0.014**
+		(0.006)	(0.006)
+4.nchild_grouped	Number of Children Group = 4, Five+	-0.196***	-0.036***
+		(0.018)	(0.013)
+2.rachsing	race: simplified race/ethnicity identification = 2, black/african american	-0.161***	-0.121***
+		(0.009)	(0.007)
+3.rachsing	race: simplified race/ethnicity identification = 3, american indian/alaska native	-0.078**	-0.063***
+		(0.030)	(0.019)
+4.rachsing	race: simplified race/ethnicity identification = 4, asian/pacific islander	-0.035**	-0.003
+		(0.014)	(0.010)
+5.rachsing	race: simplified race/ethnicity identification = 5, hispanic/latino	-0.055***	-0.069***
+		(0.008)	(0.006)
+2.marital_status	Marital Status Group = 2, Previously Married	-0.201***	-0.127***
+		(0.007)	(0.005)
+3.marital_status	Marital Status Group = 3, Never Married	-0.319***	-0.217***
+		(0.008)	(0.006)
+1b.marital_status#1b.sex		0.000	0.000
+		(0.000)	(0.000)
+1b.marital_status#2o.sex		0.000	0.000
+		(0.000)	(0.000)
+2o.marital_status#1b.sex		0.000	0.000
+		(0.000)	(0.000)
+2.marital_status#2.sex		0.213***	0.087***
+		(0.010)	(0.006)
+3o.marital_status#1b.sex		0.000	0.000
+		(0.000)	(0.000)
+3.marital_status#2.sex		0.307***	0.175***
+		(0.010)	(0.006)
+1.nchlt5_grouped	Own Children Under 5 in Household = 1, One	0.117***	0.046***
+		(0.005)	(0.004)
+2.nchlt5_grouped	Own Children Under 5 in Household = 2, Two or More	0.165***	0.077***
+		(0.008)	(0.007)
+ln_hours	Log Annual Hours		0.978***
+			(0.005)
+Constant	Constant	10.762***	3.217***
+		(0.007)	(0.035)
+			
+Observations		512,807	512,807
+R-squared		0.409	0.698
+Robust standard errors in parentheses			
+*** p<0.01, ** p<0.05, * p<0.1			

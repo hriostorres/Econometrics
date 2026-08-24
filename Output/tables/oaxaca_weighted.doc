@@ -1,0 +1,25 @@
+{\rtf1\fs24
+\trowd\trgaph75\trleft-75\intbl\trqc\clbrdrt\brdrs\cellx1872\clbrdrt\brdrs\cellx3312\clbrdrt\brdrs\cellx5328\clbrdrt\brdrs\cellx6912\clbrdrt\brdrs\cellx8496
+\ql \cell\qc (1)\cell\qc (2)\cell\qc (3)\cell\qc (4)\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx1872\cellx3312\cellx5328\cellx6912\cellx8496
+\trowd\trgaph75\trleft-75\trqc\clbrdrb\brdrs\cellx1872\clbrdrb\brdrs\cellx3312\clbrdrb\brdrs\cellx5328\clbrdrb\brdrs\cellx6912\clbrdrb\brdrs\cellx8496
+\ql VARIABLES\cell\qc Gender W\cell\qc Citizenship W\cell\qc NCFvsCF W\cell\qc NCFvsNCM W\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx1872\cellx3312\cellx5328\cellx6912\cellx8496
+\ql \cell\qc \cell\qc \cell\qc \cell\qc \cell\row
+\ql group_1\cell\qc 10.56***\cell\qc 10.42***\cell\qc 9.925***\cell\qc 9.925***\cell\row
+\ql \cell\qc (0.0187)\cell\qc (0.0163)\cell\qc (0.0264)\cell\qc (0.0264)\cell\row
+\ql group_2\cell\qc 10.21***\cell\qc 10.16***\cell\qc 10.23***\cell\qc 10.31***\cell\row
+\ql \cell\qc (0.0164)\cell\qc (0.0264)\cell\qc (0.0160)\cell\qc (0.0287)\cell\row
+\ql difference\cell\qc 0.350***\cell\qc 0.251***\cell\qc -0.307***\cell\qc -0.389***\cell\row
+\ql \cell\qc (0.00849)\cell\qc (0.0185)\cell\qc (0.0203)\cell\qc (0.0161)\cell\row
+\ql explained\cell\qc 0.168***\cell\qc 0.218***\cell\qc -0.266***\cell\qc -0.208***\cell\row
+\ql \cell\qc (0.00660)\cell\qc (0.0165)\cell\qc (0.0181)\cell\qc (0.0138)\cell\row
+\ql unexplained\cell\qc 0.182***\cell\qc 0.0339***\cell\qc -0.0409***\cell\qc -0.181***\cell\row
+\ql \cell\qc (0.00493)\cell\qc (0.00949)\cell\qc (0.0103)\cell\qc (0.0100)\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc \cell\row
+\trowd\trgaph75\trleft-75\trqc\trbrdrb\brdrs\clbrdrb\brdrs\cellx1872\clbrdrb\brdrs\cellx3312\clbrdrb\brdrs\cellx5328\clbrdrb\brdrs\cellx6912\clbrdrb\brdrs\cellx8496
+\ql Observations\cell\qc 512,807\cell\qc 512,807\cell\qc 248,563\cell\qc 33,749\cell\row
+\pard\qc
+Robust standard errors in parentheses\par
+*** p<0.01, ** p<0.05, * p<0.1\par
+}

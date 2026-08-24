@@ -1,0 +1,88 @@
+{\rtf1\fs24
+\pard\qc
+Full Coefficient Estimates\par
+\trowd\trgaph75\trleft-75\intbl\trqc\clbrdrt\brdrs\cellx11664\clbrdrt\brdrs\cellx13104\clbrdrt\brdrs\cellx14544
+\ql \cell\qc (1)\cell\qc (2)\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx11664\cellx13104\cellx14544
+\trowd\trgaph75\trleft-75\trqc\clbrdrb\brdrs\cellx11664\clbrdrb\brdrs\cellx13104\clbrdrb\brdrs\cellx14544
+\ql VARIABLES\cell\qc M5\cell\qc M6\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx11664\cellx13104\cellx14544
+\ql \cell\qc \cell\qc \cell\row
+\ql Citizenship Status = 1, Naturalized Citizen\cell\qc -0.004\cell\qc -0.002\cell\row
+\ql \cell\qc (0.017)\cell\qc (0.013)\cell\row
+\ql Citizenship Status = 2, Non-Citizen\cell\qc -0.071***\cell\qc -0.059***\cell\row
+\ql \cell\qc (0.018)\cell\qc (0.014)\cell\row
+\ql sex = 2, female\cell\qc -0.461***\cell\qc -0.260***\cell\row
+\ql \cell\qc (0.009)\cell\qc (0.006)\cell\row
+\ql 0b.citizen_cat#1b.sex\cell\qc 0.000\cell\qc 0.000\cell\row
+\ql \cell\qc (0.000)\cell\qc (0.000)\cell\row
+\ql 0b.citizen_cat#2o.sex\cell\qc 0.000\cell\qc 0.000\cell\row
+\ql \cell\qc (0.000)\cell\qc (0.000)\cell\row
+\ql 1o.citizen_cat#1b.sex\cell\qc 0.000\cell\qc 0.000\cell\row
+\ql \cell\qc (0.000)\cell\qc (0.000)\cell\row
+\ql 1.citizen_cat#2.sex\cell\qc 0.067***\cell\qc 0.040***\cell\row
+\ql \cell\qc (0.017)\cell\qc (0.011)\cell\row
+\ql 2o.citizen_cat#1b.sex\cell\qc 0.000\cell\qc 0.000\cell\row
+\ql \cell\qc (0.000)\cell\qc (0.000)\cell\row
+\ql 2.citizen_cat#2.sex\cell\qc -0.012\cell\qc 0.016*\cell\row
+\ql \cell\qc (0.012)\cell\qc (0.008)\cell\row
+\ql Age (centered at mean)\cell\qc 0.016***\cell\qc 0.010***\cell\row
+\ql \cell\qc (0.000)\cell\qc (0.000)\cell\row
+\ql Age Squared (centered at mean)\cell\qc -0.001***\cell\qc -0.001***\cell\row
+\ql \cell\qc (0.000)\cell\qc (0.000)\cell\row
+\ql Educational Attainment Group = 2, Some College\cell\qc 0.186***\cell\qc 0.135***\cell\row
+\ql \cell\qc (0.005)\cell\qc (0.003)\cell\row
+\ql Educational Attainment Group = 3, Bachelor's or Higher\cell\qc 0.569***\cell\qc 0.467***\cell\row
+\ql \cell\qc (0.009)\cell\qc (0.006)\cell\row
+\ql English Fluency Group = 2, Intermediate\cell\qc -0.189***\cell\qc -0.166***\cell\row
+\ql \cell\qc (0.010)\cell\qc (0.008)\cell\row
+\ql English Fluency Group = 3, Limited\cell\qc -0.334***\cell\qc -0.285***\cell\row
+\ql \cell\qc (0.018)\cell\qc (0.015)\cell\row
+\ql Number of Children Group = 1, One\cell\qc -0.015***\cell\qc 0.004\cell\row
+\ql \cell\qc (0.004)\cell\qc (0.003)\cell\row
+\ql Number of Children Group = 2, Two\cell\qc -0.036***\cell\qc 0.034***\cell\row
+\ql \cell\qc (0.005)\cell\qc (0.004)\cell\row
+\ql Number of Children Group = 3, Three-Four\cell\qc -0.096***\cell\qc 0.014**\cell\row
+\ql \cell\qc (0.006)\cell\qc (0.006)\cell\row
+\ql Number of Children Group = 4, Five+\cell\qc -0.196***\cell\qc -0.036***\cell\row
+\ql \cell\qc (0.018)\cell\qc (0.013)\cell\row
+\ql race: simplified race/ethnicity identification = 2, black/african american\cell\qc -0.161***\cell\qc -0.121***\cell\row
+\ql \cell\qc (0.009)\cell\qc (0.007)\cell\row
+\ql race: simplified race/ethnicity identification = 3, american indian/alaska native\cell\qc -0.078**\cell\qc -0.063***\cell\row
+\ql \cell\qc (0.030)\cell\qc (0.019)\cell\row
+\ql race: simplified race/ethnicity identification = 4, asian/pacific islander\cell\qc -0.035**\cell\qc -0.003\cell\row
+\ql \cell\qc (0.014)\cell\qc (0.010)\cell\row
+\ql race: simplified race/ethnicity identification = 5, hispanic/latino\cell\qc -0.055***\cell\qc -0.069***\cell\row
+\ql \cell\qc (0.008)\cell\qc (0.006)\cell\row
+\ql Marital Status Group = 2, Previously Married\cell\qc -0.201***\cell\qc -0.127***\cell\row
+\ql \cell\qc (0.007)\cell\qc (0.005)\cell\row
+\ql Marital Status Group = 3, Never Married\cell\qc -0.319***\cell\qc -0.217***\cell\row
+\ql \cell\qc (0.008)\cell\qc (0.006)\cell\row
+\ql 1b.marital_status#1b.sex\cell\qc 0.000\cell\qc 0.000\cell\row
+\ql \cell\qc (0.000)\cell\qc (0.000)\cell\row
+\ql 1b.marital_status#2o.sex\cell\qc 0.000\cell\qc 0.000\cell\row
+\ql \cell\qc (0.000)\cell\qc (0.000)\cell\row
+\ql 2o.marital_status#1b.sex\cell\qc 0.000\cell\qc 0.000\cell\row
+\ql \cell\qc (0.000)\cell\qc (0.000)\cell\row
+\ql 2.marital_status#2.sex\cell\qc 0.213***\cell\qc 0.087***\cell\row
+\ql \cell\qc (0.010)\cell\qc (0.006)\cell\row
+\ql 3o.marital_status#1b.sex\cell\qc 0.000\cell\qc 0.000\cell\row
+\ql \cell\qc (0.000)\cell\qc (0.000)\cell\row
+\ql 3.marital_status#2.sex\cell\qc 0.307***\cell\qc 0.175***\cell\row
+\ql \cell\qc (0.010)\cell\qc (0.006)\cell\row
+\ql Own Children Under 5 in Household = 1, One\cell\qc 0.117***\cell\qc 0.046***\cell\row
+\ql \cell\qc (0.005)\cell\qc (0.004)\cell\row
+\ql Own Children Under 5 in Household = 2, Two or More\cell\qc 0.165***\cell\qc 0.077***\cell\row
+\ql \cell\qc (0.008)\cell\qc (0.007)\cell\row
+\ql Log Annual Hours\cell\qc \cell\qc 0.978***\cell\row
+\ql \cell\qc \cell\qc (0.005)\cell\row
+\ql Constant\cell\qc 10.762***\cell\qc 3.217***\cell\row
+\ql \cell\qc (0.007)\cell\qc (0.035)\cell\row
+\ql \cell\qc \cell\qc \cell\row
+\ql Observations\cell\qc 512,807\cell\qc 512,807\cell\row
+\trowd\trgaph75\trleft-75\trqc\trbrdrb\brdrs\clbrdrb\brdrs\cellx11664\clbrdrb\brdrs\cellx13104\clbrdrb\brdrs\cellx14544
+\ql R-squared\cell\qc 0.409\cell\qc 0.698\cell\row
+\pard\qc
+Robust standard errors in parentheses\par
+*** p<0.01, ** p<0.05, * p<0.1\par
+}

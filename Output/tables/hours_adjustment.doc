@@ -1,0 +1,30 @@
+{\rtf1\fs24
+\pard\qc
+Preferred Specification: Effect of Adjusting for Hours\par
+\trowd\trgaph75\trleft-75\intbl\trqc\clbrdrt\brdrs\cellx6336\clbrdrt\brdrs\cellx8352\clbrdrt\brdrs\cellx9936
+\ql \cell\qc (1)\cell\qc (2)\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx6336\cellx8352\cellx9936
+\trowd\trgaph75\trleft-75\trqc\clbrdrb\brdrs\cellx6336\clbrdrb\brdrs\cellx8352\clbrdrb\brdrs\cellx9936
+\ql VARIABLES\cell\qc Without hours\cell\qc With hours\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx6336\cellx8352\cellx9936
+\ql \cell\qc \cell\qc \cell\row
+\ql Citizenship Status = 1, Naturalized Citizen\cell\qc -0.004\cell\qc -0.002\cell\row
+\ql \cell\qc (0.017)\cell\qc (0.013)\cell\row
+\ql Citizenship Status = 2, Non-Citizen\cell\qc -0.071***\cell\qc -0.059***\cell\row
+\ql \cell\qc (0.018)\cell\qc (0.014)\cell\row
+\ql sex = 2, female\cell\qc -0.461***\cell\qc -0.260***\cell\row
+\ql \cell\qc (0.009)\cell\qc (0.006)\cell\row
+\ql 1.citizen_cat#2.sex\cell\qc 0.067***\cell\qc 0.040***\cell\row
+\ql \cell\qc (0.017)\cell\qc (0.011)\cell\row
+\ql 2.citizen_cat#2.sex\cell\qc -0.012\cell\qc 0.016*\cell\row
+\ql \cell\qc (0.012)\cell\qc (0.008)\cell\row
+\ql Constant\cell\qc 10.762***\cell\qc 3.217***\cell\row
+\ql \cell\qc (0.007)\cell\qc (0.035)\cell\row
+\ql \cell\qc \cell\qc \cell\row
+\ql Observations\cell\qc 512,807\cell\qc 512,807\cell\row
+\trowd\trgaph75\trleft-75\trqc\trbrdrb\brdrs\clbrdrb\brdrs\cellx6336\clbrdrb\brdrs\cellx8352\clbrdrb\brdrs\cellx9936
+\ql R-squared\cell\qc 0.409\cell\qc 0.698\cell\row
+\pard\qc
+Robust standard errors in parentheses\par
+*** p<0.01, ** p<0.05, * p<0.1\par
+}

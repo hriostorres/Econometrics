@@ -1,0 +1,8 @@
+| Group | Mean annual hours | Median annual hours | FTFY share |
+|:------|------------------:|--------------------:|-----------:|
+| Male |      2,083 |      2,040 |  80.3% |
+| Female |      1,805 |      2,040 |  66.8% |
+| Native female |      1,807 |      2,040 |  66.8% |
+| Naturalized female |      1,842 |      2,040 |  69.9% |
+| Non-citizen female |      1,719 |      2,040 |  61.3% |
+| Non-citizen male |      2,002 |      2,040 |  77.7% |

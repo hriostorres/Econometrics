@@ -1,0 +1,392 @@
+---
+title: "Immigration, Gender, and Citizenship"
+subtitle: "Gender, Citizenship, and Labor Supply in the U.S. Labor Market Revisited*"
+author: "Hermogenes Rios"
+date: today
+date-format: "MMMM YYYY"
+abstract: |
+  This study examines wage disparities by gender and citizenship status using 2012–2019 ACS data to evaluate whether gaps stem from labor supply, human capital, or returns to observed characteristics. Using modified Mincer earnings regressions and two-fold Blinder–Oaxaca decompositions estimated with and without controls for annual hours worked, I show that gender and citizenship wage gaps operate through fundamentally different mechanisms. Without adjusting for labor supply, women face a 36.9% conditional wage penalty, with 91.0% of the raw gap classified as unexplained returns. Controlling for log annual hours reduces the conditional gender gap to 22.9% and cuts the unexplained share to 52.1%, demonstrating that gender earnings disparities are heavily driven by labor supply quantity rather than hourly returns. Conversely, the citizen–non-citizen gap is unaffected by hours worked and remains 88.0% explained by human capital—primarily English proficiency and education. Once labor supply, marital status, and young children are held constant, non-citizen women face no additional intersectional wage penalty beyond separate gender and citizenship effects. Policy targeting wage inequality must distinguish between the price of labor and the quantity of work supplied.
+
+format:
+  pdf:
+    toc: false
+    number-sections: true
+    colorlinks: true
+    linkcolor: navy
+    urlcolor: navy
+    geometry:
+      - top=22mm
+      - bottom=22mm
+      - left=18mm
+      - right=18mm
+    fig-pos: 'H'
+    header-includes: |
+      \usepackage{xcolor}
+      \definecolor{navy}{HTML}{1A365D}
+      \definecolor{softblue}{HTML}{2B6CB0}
+      \definecolor{bglight}{HTML}{F8FAFC}
+
+      % Running Headers and Footers
+      \usepackage{fancyhdr}
+      \pagestyle{fancy}
+      \fancyhf{}
+      \rhead{\small\itshape\color{gray} Immigration, Gender, and Citizenship}
+      \lfoot{\small\color{gray} Revisited Paper}
+      \rfoot{\small\color{gray} Page \thepage}
+      \renewcommand{\headrulewidth}{0.4pt}
+
+      % Tables.
+      \usepackage{etoolbox}
+      \usepackage{float}
+      \AtBeginEnvironment{longtable}{\footnotesize}
+      \setlength{\tabcolsep}{4pt}
+      \renewcommand{\arraystretch}{1.08}
+
+      % Custom Section Titles
+      \usepackage{titlesec}
+      \titleformat{\section}{\Large\bfseries\color{navy}}{\thesection}{1em}{}[\titlerule]
+      \titleformat{\subsection}{\large\bfseries\color{softblue}}{\thesubsection}{1em}{}
+      \titleformat{\subsubsection}{\normalsize\bfseries\color{softblue}}{\thesubsubsection}{1em}{}
+      \titleformat{\paragraph}[runin]{\normalsize\bfseries}{}{0pt}{}
+bibliography: references.bib
+---
+
+**Keywords:** Gender wage differential $\cdot$ Labor supply $\cdot$ Human capital $\cdot$ Blinder--Oaxaca decomposition
+
+
+
+\* An earlier version of this paper was presented at the 2026 Student Research Conference at the University of Chicago Booth School of Business (July 2026). I am grateful to conference participants and advisors for their comments. All remaining errors are my own. 
+
+Department of Economics, Macalester College, Saint Paul, MN. Contact: [hriostor@macalester.edu](mailto:hriostor@macalester.edu).
+
+\newpage
+
+# Introduction
+
+It is often said that when the U.S. catches a cold, Mexico gets pneumonia — a reflection of the economic interdependence between Mexico and the U.S. [@malkin2008]. Yet, is immigration truly detrimental to the U.S. economy? If so, why has the U.S. implemented policies such as the Bracero Program, which allowed Mexicans to work in the U.S. for up to six months [@ushouseofrepresentatives; @massey_etal2002]? The truth is that there is nothing more permanent than a temporary work permit.
+
+The foreign-born population in the United States reached a record high of 53.3 million in January 2025, representing 15.8% of the total population [@pew2025]. Of these, Mexican immigrants comprise the largest group at 21% of all U.S. immigrants [@pew2025]. Among the total immigrant population, approximately 11 million are unauthorized [@baker_warren2024]. Despite immigrants' role in the U.S. economy, particularly in labor-intensive industries, they often face significant barriers and are perceived by policymakers as what I will hereafter term an "undesired necessity" [@national_immigration_forum2017].
+
+The debate over immigration's economic impact remains contentious among economists. The Mariel boatlift of 1980, which brought 120,000 low-skilled Cuban migrants to Miami, exemplifies this disagreement. While @national_academies2017 found little evidence that this influx harmed native workers' wages or employment, @borjas2017 argued it significantly depressed low-skilled native wages. @card_peri2016 later challenged these findings, concluding there was "essentially no effect" on Miami's labor market.
+
+Rather than engaging in this broader debate, this paper focuses on how citizenship status and gender wage disparities arise from differences in labor supply, human capital, and returns to observed characteristics. Specifically, it examines how these mechanisms shape wage disparities between native-born citizens, naturalized citizens, and non-citizens across the U.S. labor market. This paper asks: \textit{To what extent are gender and citizenship wage disparities driven by differences in labor supply, human capital, and returns to observed characteristics?}
+
+This paper analyzes pooled cross-sectional individual-level data from the 2012--2019 American Community Survey (ACS). Geographic diversity is ensured through a 5\% single-stage cluster sample of Public Use Microdata Areas (PUMAs). I estimate wage differentials using a modified Mincer earnings equation that includes human capital, marital status, and race controls, along with year, industry, birthplace, and geographic fixed effects. I then use two-fold pooled Blinder--Oaxaca decompositions to assess how differences in observed characteristics and returns contribute to gender and citizenship wage gaps, with particular attention to the role of annual labor supply.
+
+The dependent variable is *annual* wage income, which is the product of an hourly wage and the quantity of hours supplied. Because men and women supply different quantities of paid labor, a specification that omits hours cannot distinguish the price of labor from the quantity of labor, and a Blinder--Oaxaca decomposition that omits hours from its control set will assign the entire labor supply differential to the *unexplained* component by construction. I therefore estimate every specification twice, with and without a control for log annual hours, and treat the difference between the two as the object of interest. The result is substantial: the share of the gender gap that is unexplained falls from 91.0% to 52.1%, while the citizenship gap is essentially untouched.
+
+The remainder of the paper proceeds as follows: @sec-lit reviews the literature, @sec-theory presents the theory, @sec-data describes the data, @sec-empirical outlines the empirical strategy, @sec-results reports the results, and @sec-conclusion concludes.
+
+# Literature Review {#sec-lit}
+
+While there is dispute over immigration's broader impact on the U.S. economy, there is consensus on one observation: a wage gap between immigrant and native workers [@borjas1994; @coulombe_etal2014; @smith_fernandez2017]. Scholars continue to debate the relative weight of the following three wage determinants.
+
+## Human Capital
+
+Immigrants' wage disadvantages are often attributed to disparities in human capital. @borjas1994 argues that U.S.-born workers inherently benefit from English proficiency, which allows immigrants to escape "ethnic enclaves" and access broader opportunities [@garg2004]. Education also plays a critical role: immigrants complete 1.3 fewer years of formal education than natives and are far more likely to lack a high school diploma [@camarota_zeigler2016; @card2005]. Even when immigrants possess comparable qualifications, foreign credentials are systematically devalued. @chiswick1978 found that immigrants receive lower returns to foreign education and experience, a pattern @blau_kahn2015 confirmed, showing U.S. employers discount "non-domestic skill signals" for newly legalized immigrants.
+
+However, human capital alone cannot fully explain persistent gaps. @coulombe_etal2014 find that once human capital quality is accounted for, the unexplained portion of the immigrant--native wage gap decreases (by 62% for men and is nearly eliminated for women). @donahue2021 reinforces this critique, finding that wage gaps persist even among immigrants with 25+ years of U.S. residency, suggesting structural barriers like unfair labor policies or discrimination. Coulombe et al.'s study is used as a conceptual guide rather than as an empirical precedent for the U.S., as their study is based in Canada.
+
+## Occupational Segregation
+
+Immigrants face systemic barriers that funnel them into low-wage industries. @borjas2018 attributes this to "imperfect substitutability," arguing that immigrants cluster in occupations natives avoid. Similarly, @smith_fernandez2017 found that immigrants disproportionately work in low-wage sectors, while @garg2004 emphasizes how limited English proficiency traps them in industries like construction, where wages lag by 12--18%.
+
+Occupational segregation is not voluntary. @elliott_lindley2008, @blau_kahn2015, and @ottaviano_peri2012 argue that limited education restricts immigrants to unskilled jobs, but this ignores gender dynamics. @vernez1999 notes that female immigrants face "additional cultural and social barriers," such as childcare responsibilities and spousal income effects [@schoeni1998]. A husband's higher wages may reduce a woman's labor force participation (income effect) or increase her household productivity (substitution effect).
+
+Key mechanisms in this literature, including childcare duties, spousal income effects, and occupational barriers, operate primarily through hours supplied rather than hourly wages. Empirical specifications omitting labor hours fail to separate these two channels.
+
+## Discrimination
+
+Discrimination is a persistent yet underaddressed factor. @oreopoulos2011 attributes wage disparities to "various intangible factors," including employer bias. @hersch2011 quantifies colorism, showing that immigrants with darker skin tones earn 16--23% less than lighter-skinned peers, indicating that wage gaps persist beyond human capital and reflect racialized judgments similar to those tied to non-citizen status. These penalties intersect with gender. @vernez1999 documents compounded barriers for immigrant women, and @garg2004 shows Latina workers concentrated in the sub-\$35,000 bracket compared to Asian counterparts.
+
+Citizenship status further exacerbates these inequities. The @national_academies2017 stress that unauthorized workers face heightened vulnerability, yet no study compares naturalized and non-citizen women's exposure to discrimination. @massey_etal2002 and @national_immigration_forum2017 emphasize industries like agriculture, where non-citizens dominate, but they fail to analyze how citizenship--gender intersections shape outcomes.
+
+Taken together, existing research leaves several gaps that this paper addresses. First, although prior research documents wage disparities by immigration and citizenship status, less attention has been paid to how differences in labor supply affect the interpretation of those disparities when annual earnings are used as the outcome. Second, while gender wage gaps are well documented, specifications that omit hours worked may conflate differences in the quantity of labor supplied with differences in returns to labor. Third, relatively little work compares the extent to which labor supply, human capital, and differences in returns account for gender and citizenship wage gaps within a common empirical framework.
+
+# Economic Theory {#sec-theory}
+
+Human capital theory [@becker1964; @mincer1974] argues that wages reflect investments in education, skills, and experience. However, immigrants face credential devaluation, where foreign education and work experience are systematically discounted by employers [@chiswick1978; @blau_kahn2015].
+
+Taste-based discrimination [@becker1957] extends this by framing employer prejudice as a willingness to sacrifice profits to avoid hiring certain groups. Employers act as if hiring non-citizens, women, or both imposes a nonpecuniary cost, quantified by a discrimination coefficient $d$. The perceived cost of employing a member of a disfavored group thus becomes $w(1+d)$, exceeding their market wage unless the worker accepts a wage discount.[^becker] Credential devaluation exacerbates this: foreign degrees, especially from non-Western institutions, are treated as noisy or unreliable signals of productivity [@banerjee_lee2015; @li2001]. @donahue2021, for example, finds that immigrants with foreign credentials earn 18% less than natives with comparable U.S. qualifications, even after controlling for occupation.
+
+[^becker]: In Becker's model, $w$ is the worker's market wage and $d$ is the discrimination coefficient. If $d > 0$, the employer perceives hiring costs as $w(1+d)$, making the worker less competitive unless they accept a wage discount.
+
+Statistical discrimination complicates this dynamic. Employers use group averages, based on citizenship status and/or gender, to proxy unobserved productivity under imperfect information [@aigner_cain1977]. Non-citizens may be stereotyped as unreliable due to visa instability and women as less committed due to caregiving roles, compounding penalties for non-citizen women.
+
+Immigration policies create institutional barriers for non-citizens, limiting labor protections and access to high-wage sectors [@massey_etal2002]. Unauthorized workers lack minimum wage protections in agriculture, while temporary visa holders remain dependent on employers. Naturalization mitigates these barriers by granting legal protections. Institutional theory therefore suggests that naturalized citizens likely experience narrower wage gaps compared to natives, while non-citizens face persistent penalties, especially in informal sectors.
+
+Intersectionality theory argues that overlapping identities create multiplicative, not additive, disadvantages [@browne_misra2003]. Non-citizen women face "double jeopardy": credential devaluation (human capital) and stereotypes about caregiving roles (statistical discrimination). This intersectional framework suggests non-citizen women face wage penalties exceeding the combined effects of gender and citizenship status alone.
+
+Hence, by considering these frameworks, I model wages as a function of:
+
+$$
+\textit{Wage} = f\!\left(\text{Human Capital},\; \text{Discrimination},\; \text{Institutional Barriers},\; \text{Labor Supply},\; \text{Group Interactions}\right)
+$$ {#eq-wage-function}
+
+These frameworks imply that observed wage disparities may reflect differences in human capital, labor supply, institutional barriers, or the returns to observed characteristics. Intersectionality provides an additional test of whether the combination of gender and non-citizen status produces a penalty beyond their separate associations with wages.
+
+If human capital theory alone governed wages, group gaps would largely disappear once education, English proficiency, and experience are held constant. A labor supply account instead predicts that differences in annual hours will account for a substantial share of the gender wage gap and that including hours will shift part of the conventionally unexplained component into the explained component. By contrast, if citizenship disparities operate primarily through differences in human capital, accounting for labor supply should have a comparatively small effect on the citizenship gap. The returns component should capture the portion of each gap that remains after observed characteristics are held constant. Based on these competing mechanisms, I state the following hypotheses:
+
+$$
+\begin{aligned}
+H_0 &: \text{Differences in labor supply and observed characteristics account for no substantial share} \\
+&\phantom{:\;} \text{of gender or citizenship wage disparities, leaving the majority of each gap unexplained.} \\[6pt]
+H_A &: \text{Differences in labor supply account for a substantial share of the gender wage gap, while} \\
+&\phantom{:\;} \text{human capital accounts for most of the citizenship wage gap.}
+\end{aligned}
+$$ {#eq-hypotheses}
+
+
+# Data Description {#sec-data}
+
+This study analyzes individual-level American Community Survey (ACS) data from 2012 through 2019, a period chosen to ensure consistent Public Use Microdata Area (PUMA) geography definitions.[^ipums] The unit of observation is an employed, wage-earning adult aged 16–66 drawn from pooled annual cross-sections. From an initial raw extract of 25.3 million observations, I construct a single-stage cluster sample by drawing a 5% simple random sample of PUMA--state geographies and retaining all resident workers in those areas. After removing invalid income and age records, restricting to employed wage earners, and requiring valid hours and weeks worked, the final sample yields **512,807** individuals across 118 unique PUMA--state geographies. Because sampling occurs at the regional level, all inference clusters standard errors on these 118 geographies, and models incorporate PUMA--state fixed effects to absorb local economic conditions across metropolitan and rural areas in all four census regions.
+
+[^ipums]: See @ruggles_etal2025 for the data source. IPUMS terms of use prohibit redistributing extracts, so the replication package documents the extract definition rather than shipping the microdata.
+
+The dataset captures core indicators for analyzing wage disparities: citizenship status (native citizen, naturalized citizen, or non-citizen), sex, industry, and educational attainment grouped into three levels (high school or less, some college, or bachelor's degree or higher), with wage income deflated to 2015 dollars.[^cpi] To refine the identification strategy, the dataset includes four variables missing from earlier frameworks: usual weekly hours worked, weeks worked in the prior year, marital status, and the count of resident children under age five. Annual hours are calculated as the product of usual weekly hours and imputed weeks, setting non-applicable entries to missing to align with the wage income reference period. These measures establish the empirical baseline summarized in @tbl-descriptives and @tbl-labor-supply.
+
+[^cpi]: All wages are adjusted to 2015 dollars by multiplying by $1/0.703$, where 0.703 is the CPI99 index value for 2015. The federal minimum wage used for wage trimming is deflated with the same index year by year.
+
+As detailed in @tbl-descriptives, naturalized citizens earn higher mean annual wages (\$56,979) than native-born citizens (\$52,103), suggesting positive selection into naturalization. Non-citizens display the lowest mean wages (\$41,173) and a wide gender gap: non-citizen women earn 68% of non-citizen men's annual earnings (\$32,264 vs. \$47,182).[^acs-status] Across all demographic groups, median wages sit substantially below means—most starkly among non-citizens (\$26,711 median vs. \$41,173 mean)—reflecting heavily right-skewed distributions. Crucially, @tbl-labor-supply highlights the central labor supply mechanism: while the **median** man and **median** woman both log 2,040 annual hours (40 hours per week for 51 weeks), mean hours diverge by 278 hours (2,083 vs. 1,805). This gap arises entirely in the left tail, where 33.2% of women work part-time or part-year compared to 19.7% of men, demonstrating that gender labor supply differences stem from participation intensity rather than full-time schedule variances.
+
+[^acs-status]: ACS does not distinguish between legal and undocumented immigration statuses. This category serves as a catch-all that likely includes unauthorized workers, which may partially drive these lower wage estimates.
+
+Non-citizen workers remain concentrated in labor-intensive sectors, with Education & Health (16.4%), Manufacturing (14.2%), Professional Services (13.8%), Arts (13.2%), and Construction (10.2%) accounting for 67.7% of non-citizen employment (@fig-industry-ratio).[^ratio] As shown in @fig-birthplace, foreign-born workers originate primarily from Mexico, Southeast Asia, and Europe, with Mexican origin separated due to its large sample share. Finally, @fig-income-dist illustrates income distributions across educational attainment levels by sex and citizenship status, completing the descriptive foundation for the econometric models.
+
+[^ratio]: Ratios are calculated by dividing the number of foreign-born workers in each industry by the number of U.S.-born citizen workers in the same industry.
+
+# Empirical Strategy {#sec-empirical}
+
+I use two econometric approaches to examine wage differentials across citizenship status and sex: a modified Mincer earnings function and a series of Blinder--Oaxaca decompositions.
+
+## Mincer Earnings Function
+
+I estimate a population regression model for individual $i$ in PUMA--state geography $s$ and survey year $t$:
+
+$$
+\begin{aligned}
+\ln(wage_{i,s,t}) = \;& \beta_0 + \beta_1 Nat_{i,s,t} + \beta_2 NonCit_{i,s,t} + \beta_3 Female_{i,s,t} \\
+&+ \beta_4 (Nat \times Female)_{i,s,t} + \beta_5 (NonCit \times Female)_{i,s,t} \\
+&+ \beta_6 \ln(hours_{i,s,t}) + \mathbf{Z}'_{i,s,t}\boldsymbol{\gamma} + \alpha_s + \tau_t + \theta_{j(i)} + \psi_{b(i)} + \varepsilon_{i,s,t}
+\end{aligned}
+$$ {#eq-mincer}
+
+where $\ln(wage)$ is log annual wage income in constant 2015 dollars. $Nat$ and $NonCit$ indicate naturalized citizens and non-citizens (native-born citizens omitted), $Female$ indicates women, and the interaction terms capture differential citizenship associations by sex. The coefficient $\beta_5$ measures the additional wage penalty faced by non-citizen women beyond separate gender and citizenship associations. The term $\beta_6 \ln(hours)$ is the central addition to the standard framework. Because annual earnings reflect hourly pay multiplied by hours worked ($\ln(wage) = \ln(\text{hourly wage}) + \ln(hours)$), estimating $\beta_6$ freely relaxes the implicit restriction that $\beta_6 = 1$. Estimating models with and without this term (M1--M3 and M5 vs. M4 and M6) allows me to isolate how much of each differential reflects the price of labor versus the quantity supplied.
+
+The vector $\mathbf{Z}'_{i,s,t}$ contains standard human capital and household controls: a quadratic in age, English proficiency, resident children, and children under five. Crucially, marital status enters interacted with sex rather than additively. Because the male marriage premium and female marriage penalty work in opposite directions, an additive control averages them toward zero. With this interaction, $\beta_3$ represents the female differential within the married reference category. Education enters nonlinearly through three attainment indicators (high school or less, some college, bachelor's degree or higher). This captures credential threshold ("sheepskin") effects, as wage returns are flat below twelve years of schooling and steep thereafter across all demographic groups (@fig-returns-educ, @tbl-returns) [@hungerford_solon1987; @lemieux2006]. 
+
+Fixed effects absorb geography ($\alpha_s$), survey year ($\tau_t$), industry ($\theta_{j(i)}$), and birthplace region ($\psi_{b(i)}$). Race indicators are included alongside birthplace fixed effects as complements: birthplace absorbs origin-country factors, while race captures racial identification in the U.S. labor market [@hersch2011]. Household income is excluded as a "bad control" because an individual's own wage directly composes household income [@angrist_pischke2009]. All standard errors are clustered on the 118 PUMA--state geographies.
+
+## Blinder--Oaxaca Decomposition
+
+I apply a two-fold Blinder--Oaxaca decomposition [@blinder1973; @oaxaca1973] with pooled reference coefficients [@neumark1988; @jann2008] across four dyadic contrasts: (1) overall gender, (2) overall citizenship, (3) non-citizen women vs. citizen women, and (4) non-citizen women vs. non-citizen men. Writing $\Delta = E[\ln(wage) \mid A] - E[\ln(wage) \mid B]$:
+
+$$
+\Delta = \underbrace{\left[E(X_A) - E(X_B)\right]'\beta^{*}}_{\text{explained}} + \underbrace{\left[E(X_A)'(\beta_A - \beta^{*}) + E(X_B)'(\beta^{*} - \beta_B)\right]}_{\text{unexplained}}
+$$ {#eq-oaxaca}
+
+where $\beta^{*}$ is estimated from the pooled sample including a group indicator [@jann2008]. The explained component evaluates differences in observable characteristics at pooled returns, while the unexplained component captures differences in returns (serving as an upper-bound proxy for structural penalties and unobserved productivity differences).
+
+Each contrast is decomposed twice: once excluding and once including log annual hours. Omitting hours forces labor supply differences into the unexplained component, confounding them with differential returns. Including hours shifts labor supply into the explained component, directly measuring how much of the "unexplained" wage gap is driven by differences in work hours.
+
+The decomposition control set mirrors @eq-mincer, omitting geographic fixed effects for dimensionality, birthplace fixed effects because birthplace defines citizenship, race indicators to leave race differentials inside the unexplained share, and sex interactions. Finally, I note that the non-citizen category aggregates unauthorized workers and temporary visa holders who face distinct legal protections and labor market access constraints.
+
+# Results {#sec-results}
+
+## Regression Results
+
+@tbl-regression reports six specifications, progressively incorporating human capital controls (M2), marital status and young children (M3), annual labor supply (M4), high-dimensional fixed effects (M5), and both fixed effects and labor supply (M6). Standard errors are clustered on 118 PUMA--state geographies in every model.[^weights] Model 1 captures unadjusted raw associations: naturalized citizens earn 12.4% more than native-born citizens ($p < 0.01$), while non-citizens earn 23.1% less ($p < 0.01$). Women experience a raw wage discount of 32.0% ($p < 0.01$), whereas the raw non-citizen $\times$ female interaction is $-2.1\%$ and not statistically significant ($p > 0.10$).
+
+[^weights]: Models are reported unweighted. Weighted models using ACS person weights (`perwt`) appear in @tbl-weighted and yield substantively identical results.
+
+Model 2 demonstrates that citizenship differentials shrink dramatically once human capital and racial composition are held constant. The naturalized citizen premium falls from 12.4% to 3.0% ($p < 0.05$), and the non-citizen wage penalty drops from 23.1% to 3.2% ($p < 0.05$), confirming that raw citizenship disparities stem primarily from differences in education, English proficiency, age, and race. Among gender models, Model 5 (the preferred specification without labor supply controls) yields a conditional female wage penalty of 36.9% ($p < 0.01$) among married workers. When Model 6 adds log annual hours, this penalty decreases to 22.9% ($p < 0.01$). The 14.0 percentage point decline isolates the portion of the conditional gender gap driven by differences in work volume rather than hourly pay.
+
+The estimated elasticity of annual earnings with respect to annual hours is 0.978 ($p < 0.01$). Although statistically distinguishable from unity given the large sample size, it is economically close to exact proportionality. Annual earnings therefore scale nearly one-for-one with hours worked, confirming that Model 6 functions similarly to an hourly wage regression. Sensitivity testing in @tbl-sensitivity validates this equivalence, yielding an hourly wage female penalty of 22.5% ($p < 0.01$) compared to Model 6's 22.9%.
+
+### The Intersectional Penalty Does Not Survive {#sec-null}
+
+In contrast to earlier formulations predicting a compound disadvantage for non-citizen women, the empirical interaction term shows no evidence of an additional wage penalty. In Model 5—which includes marital status, young children, and the full fixed-effects battery but excludes labor supply—the non-citizen female interaction is $-1.2\%$ and statistically insignificant ($p > 0.10$). In Model 6, which controls for annual hours, the interaction estimate shifts to $+1.6\%$ ($p < 0.10$). Across all six specifications, the interaction is never negative and statistically significant at conventional levels ($p < 0.05$).
+
+Three methodological refinements drive this reversal. First, interacting marital status with sex absorbs group differences in marriage rates and female marriage penalties. Second, controlling for children under age five accounts for caregiving responsibilities that correlate with non-citizen status and female labor supply. Third, controlling for log annual hours removes labor supply differentials, as non-citizen women exhibit the lowest full-time full-year (FTFY) rate in the sample (61.3%). Consequently, the data provide no evidence of an additional intersectional wage penalty for non-citizen women beyond separate gender and citizenship associations, directly contrasting with the multiplicative "double jeopardy" prediction [@browne_misra2003].
+
+## Blinder--Oaxaca Decomposition
+
+@tbl-oaxaca presents two-fold Blinder--Oaxaca decompositions across four dyadic contrasts, estimated with and without log annual hours controls (@fig-oaxaca, @fig-oaxaca-detail). The results highlight fundamental structural differences between gender and citizenship wage gaps.
+
+Without adjusting for hours, 91.0% ($p < 0.01$) of the raw gender wage gap is classified as unexplained. Once annual hours are controlled for, the unexplained share drops to 52.1% ($p < 0.01$). Hours worked alone account for 46.3% of the total raw gender gap within the explained component, whereas all other observed characteristics combined account for less than 1.0 percentage point because women's educational advantage offsets their less favorable industry distribution. Nearly half of what conventional specifications label as unequal returns to female characteristics actually reflects unequal quantities of paid work.
+
+By contrast, the citizenship wage gap is driven almost entirely by human capital rather than labor supply. Observable characteristics account for 80.7% ($p < 0.01$) of the raw citizen--non-citizen gap without hours controls and 88.0% ($p < 0.01$) with them, leaving an unexplained share of only 12.3%. English proficiency and educational attainment account for the vast majority of the explained component, while hours worked contribute only 3.0 percentage points. This confirms that citizenship disparities reflect structural gaps in human capital accumulation [@coulombe_etal2014] rather than labor supply constraints.
+
+Subgroup decompositions reveal the same pattern. Non-citizen women earn 33.4% less than non-citizen men ($p < 0.01$). Controlling for annual hours reduces the unexplained portion of this intra-group gender gap from 92.4% to 47.5% ($p < 0.01$), with hours dominating the explained component. Conversely, comparing non-citizen women to citizen women yields a gap that is 85.9% ($p < 0.01$) explained by observable human capital. Across all contrasts, gender gaps are governed by labor supply volume, whereas citizenship gaps are governed by human capital characteristics.
+
+## Robustness
+
+Sensitivity analyses in @tbl-sensitivity confirm the stability of the preferred model. Estimating the model with log hourly wages directly yields a female wage penalty of 22.5% ($p < 0.01$), mirroring the 22.9% penalty in Model 6. Restricting the sample to FTFY workers yields a female wage penalty of 25.5% ($p < 0.01$). While reported for comparability with prior literature [@blau_kahn2015], the FTFY restriction is not preferred because it drops 33.2% of women compared to 19.7% of men, truncating the sample on the primary margin under study. Excluding top-coded hours (99+ weekly hours, affecting 0.10% of the sample) alters estimated coefficients by less than 0.1 percentage points.
+
+Design choices further support inferential credibility. Standard errors clustered on 118 PUMA--state geographies ensure robustness against localized error structures. Re-estimating preferred specifications using ACS population person weights (`perwt`) produces substantively identical results (@tbl-weighted). Finally, residual diagnostics show that median residuals track zero across fitted values, with no systematic non-linear misfit across the wage distribution.
+
+
+# Conclusion {#sec-conclusion}
+
+This paper demonstrates that gender and citizenship wage disparities in the U.S. labor market are driven by distinct economic mechanisms. The gender earnings gap is substantially a labor supply phenomenon: controlling for annual hours worked reduces the unexplained share of the gender gap from 91.0% to 52.1%, cuts the conditional female wage penalty from 36.9% to 22.9%, and reveals that hours worked alone account for nearly half of the raw differential. In contrast, the citizenship gap is structural and human-capital driven: 88.0% of the citizen–non-citizen wage gap is explained by observable characteristics—dominated by English proficiency and educational attainment—and is entirely unaffected by labor supply adjustments. Furthermore, once demographic factors and hours are held constant, non-citizen women face no distinct intersectional penalty beyond the separate, additive associations of gender and citizenship.
+
+Future research should expand on these findings by disaggregating foreign educational credentials, evaluating differences across specific visa categories and legal statuses, and treating labor supply itself as an outcome to be explained—particularly how childcare access, household division of labor, and occupational barriers constrain annual hours worked.
+
+Ultimately, understanding labor market inequality requires distinguishing the price of labor from the quantity of labor supplied. Policy targeting hourly wage rates alone will leave gender gaps rooted in labor supply constraints untouched, just as labor supply interventions will do little to close human-capital-driven citizenship gaps. Precision in identifying these underlying mechanisms ensures policy addresses actual structural barriers, allowing immigrant and female labor to be evaluated on market returns rather than treated as an "undesired necessity."
+
+\newpage
+
+# Appendix {.unnumbered}
+
+```{=latex}
+\setcounter{table}{0}
+\setcounter{figure}{0}
+\renewcommand{\thetable}{A\arabic{table}}
+\renewcommand{\thefigure}{A\arabic{figure}}
+```
+
+## Tables {.unnumbered}
+\vspace{8em}
+
+| Group | N | Share | Mean wage | Median wage |
+|:------|--:|------:|----------:|------------:|
+| Native citizen | 436,582 | 85.14% | \$52,103 | \$39,243 |
+| Naturalized citizen | 42,476 | 8.28% | \$56,979 | \$40,683 |
+| Non-citizen | 33,749 | 6.58% | \$41,173 | \$26,711 |
+| Male | 264,244 | 51.53% | \$61,300 | \$45,440 |
+| Female | 248,563 | 48.47% | \$41,675 | \$32,000 |
+
+: Sample composition and annual wage income, 2015 dollars {#tbl-descriptives}
+
+\vspace{8em}
+| Group | Mean annual hours | Median annual hours | FTFY share |
+|:------|------------------:|--------------------:|-----------:|
+| Male | 2,083 | 2,040 | 80.3% |
+| Female | 1,805 | 2,040 | 66.8% |
+| Native female | 1,807 | 2,040 | 66.8% |
+| Naturalized female | 1,842 | 2,040 | 69.9% |
+| Non-citizen female | 1,719 | 2,040 | 61.3% |
+| Non-citizen male | 2,002 | 2,040 | 77.7% |
+
+: Annual hours worked and full-time full-year status by group {#tbl-labor-supply}
+
+\newpage
+\vspace{8em}
+
+| Variable | M1 | M2 | M3 | M4 | M5 | M6 |
+|:---------|---:|---:|---:|---:|---:|---:|
+| Naturalized Citizen | 0.117*** | 0.030** | 0.004 | 0.025** | -0.004 | -0.002 |
+|  | (0.025) | (0.012) | (0.012) | (0.012) | (0.017) | (0.013) |
+| Non-Citizen | -0.263*** | -0.033** | -0.058*** | -0.035** | -0.071*** | -0.059*** |
+|  | (0.029) | (0.016) | (0.016) | (0.014) | (0.018) | (0.014) |
+| Female | -0.386*** | -0.423*** | -0.542*** | -0.299*** | -0.461*** | -0.260*** |
+|  | (0.011) | (0.011) | (0.011) | (0.007) | (0.009) | (0.006) |
+| Naturalized $\times$ Female | 0.022 | 0.045** | 0.088*** | 0.051*** | 0.067*** | 0.040*** |
+|  | (0.019) | (0.020) | (0.019) | (0.012) | (0.017) | (0.011) |
+| Non-Citizen $\times$ Female | -0.021 | -0.023 | -0.006 | 0.021** | -0.012 | 0.016* |
+|  | (0.016) | (0.014) | (0.014) | (0.010) | (0.012) | (0.008) |
+| Constant | 10.630*** | 10.625*** | 10.777*** | 3.005*** | 10.762*** | 3.217*** |
+|  | (0.022) | (0.014) | (0.015) | (0.037) | (0.007) | (0.035) |
+| Observations | 512,807 | 512,807 | 512,807 | 512,807 | 512,807 | 512,807 |
+| Human capital controls |  | X | X | X | X | X |
+| Marital $\times$ sex, children <5 |  |  | X | X | X | X |
+| Log annual hours |  |  |  | X |  | X |
+| Fixed effects |  |  |  |  | X | X |
+| $R^2$ | 0.042 | 0.344 | 0.356 | 0.668 | 0.409 | 0.698 |
+
+: Effect of gender and citizenship on log annual wages. Standard errors clustered on 118 PUMA--state geographies in parentheses. \*\*\* $p<0.01$, \*\* $p<0.05$, \* $p<0.1$. From M3 onward the Female coefficient is the differential within the married reference category. {#tbl-regression}
+
+\vspace{8em}
+
+| Contrast | Total gap | Explained (no hrs) | Unexplained (no hrs) | Explained (hrs) | Unexplained (hrs) | Unexplained share |
+|:-----------------------------|----------:|------------:|--------------:|----------:|------------:|:------------------|
+| Male vs. Female | 0.378*** | 0.035*** | 0.344*** | 0.181*** | 0.197*** | 91.0% $\rightarrow$ **52.1%** |
+| Citizen vs. Non-Citizen | 0.249*** | 0.201*** | 0.048*** | 0.219*** | 0.031*** | 19.4% $\rightarrow$ **12.3%** |
+| NC Female vs. Citizen Female | -0.297*** | -0.218*** | -0.079*** | -0.255*** | -0.042*** | 26.6% $\rightarrow$ **14.0%** |
+| NC Female vs. NC Male | -0.406*** | -0.032*** | -0.375*** | -0.213*** | -0.193*** | 92.4% $\rightarrow$ **47.5%** |
+
+: Two-fold pooled Blinder--Oaxaca decompositions, with and without a control for log annual hours. N = 512,807 for the gender and citizenship contrasts, 248,563 and 33,749 for the two intersectional contrasts. \*\*\* $p<0.01$. {#tbl-oaxaca}
+
+\newpage
+
+| Variable | Hourly DV | FTFY subsample | Rich hours controls | No top-coded hours |
+|:-------------------|--------------:|--------------:|--------------:|--------------:|
+| Naturalized Citizen | -0.002 | -0.016 | -0.002 | -0.002 |
+|  | (0.013) | (0.015) | (0.013) | (0.013) |
+| Non-Citizen | -0.058*** | -0.070*** | -0.059*** | -0.059*** |
+|  | (0.014) | (0.015) | (0.014) | (0.013) |
+| Female | -0.255*** | -0.294*** | -0.240*** | -0.260*** |
+|  | (0.006) | (0.006) | (0.005) | (0.006) |
+| Naturalized $\times$ Female | 0.040*** | 0.058*** | 0.040*** | 0.041*** |
+|  | (0.011) | (0.014) | (0.011) | (0.011) |
+| Non-Citizen $\times$ Female | 0.016* | 0.020** | 0.020** | 0.016* |
+|  | (0.008) | (0.010) | (0.009) | (0.008) |
+| Observations | 512,807 | 378,287 | 512,807 | 512,271 |
+| $R^2$ | 0.380 | 0.418 | 0.705 | 0.699 |
+
+: Sensitivity analyses. Column 1 uses log hourly wage as the dependent variable; column 2 restricts to full-time full-year workers; column 3 adds FTFY and part-time indicators alongside log hours; column 4 drops observations with top-coded usual hours (99+). {#tbl-sensitivity}
+
+| Variable | M5 unweighted | M5 weighted | M6 unweighted | M6 weighted |
+|:---------------------|-------------:|-------------:|-------------:|-------------:|
+| Naturalized Citizen | -0.004 | -0.021 | -0.002 | -0.008 |
+|  | (0.017) | (0.017) | (0.013) | (0.013) |
+| Non-Citizen | -0.071*** | -0.072*** | -0.059*** | -0.053*** |
+|  | (0.018) | (0.018) | (0.014) | (0.013) |
+| Female | -0.461*** | -0.443*** | -0.260*** | -0.250*** |
+|  | (0.009) | (0.009) | (0.006) | (0.006) |
+| Naturalized $\times$ Female | 0.067*** | 0.063*** | 0.040*** | 0.040*** |
+|  | (0.017) | (0.016) | (0.011) | (0.010) |
+| Non-Citizen $\times$ Female | -0.012 | -0.010 | 0.016* | 0.017** |
+|  | (0.012) | (0.013) | (0.008) | (0.009) |
+| Observations | 512,807 | 512,807 | 512,807 | 512,807 |
+| $R^2$ | 0.409 | 0.406 | 0.698 | 0.698 |
+
+: Unweighted vs. population-weighted specifications. Weights are ACS person weights. Standard errors clustered on 118 geographies in parentheses. \*\*\* $p<0.01$, \*\* $p<0.05$, \* $p<0.1$. {#tbl-weighted}
+
+| Group | Slope, <12 years | Slope, 12+ years | N (<12) | N (12+) |
+|:------|-----------------:|-----------------:|--------:|--------:|
+| Citizen Male | 0.000 (0.002) | 0.142 (0.005) | 9,865 | 208,106 |
+| Non-Citizen Male | 0.008 (0.003) | 0.162 (0.008) | 5,656 | 12,934 |
+| Citizen Female | -0.010 (0.003) | 0.141 (0.003) | 6,454 | 202,600 |
+| Non-Citizen Female | 0.000 (0.003) | 0.152 (0.010) | 3,053 | 9,404 |
+
+: Returns to a year of schooling below and above high school completion, workers aged 25 and over. Each cell is the coefficient on years of schooling from a separate regression of log annual wage on years of schooling within the group and schooling range, with standard errors clustered on PUMA--state in parentheses. Conditional on hours, English proficiency, race, marital status, children, and year, industry, PUMA--state and birthplace fixed effects, the non-citizen $\times$ schooling interaction above twelve years is $-0.008$ (s.e. 0.003, $p = 0.007$). {#tbl-returns}
+
+\newpage
+
+## Figures {.unnumbered}
+
+![The log transformation reduces skewness from 3.91 to $-0.89$.](Paper/fig1_log_wages.pdf){#fig-logwages width=70%}
+
+![Demographic diversity by birthplace.](Paper/fig2_birthplace.pdf){#fig-birthplace width=70%}
+
+\newpage
+
+![Ratio of foreign-born to citizen workers by industry.](Paper/fig3_industry_ratio.pdf){#fig-industry-ratio width=72%}
+
+![Income group distribution by gender, citizenship, and education.](Paper/fig4_income_dist.pdf){#fig-income-dist width=72%}
+
+\newpage
+
+![Returns to education by citizenship and gender, age 25+. Mean log wage at each education level with 95% confidence intervals.](Paper/fig5_returns_educ.pdf){#fig-returns-educ width=70%}
+
+![Decomposition detail: gender gap, hours controlled. Grouped covariate contributions.](Paper/fig_oaxaca_detail.pdf){#fig-oaxaca-detail width=70%}
+
+\newpage
+
+::: {#fig-oaxaca layout-nrow=2}
+![Without hours control](Paper/fig_oaxaca_summary_nohrs.pdf){#fig-oaxaca-nohrs}
+
+![With hours control](Paper/fig_oaxaca_summary_hrs.pdf){#fig-oaxaca-hrs}
+
+Blinder--Oaxaca decompositions of the four contrasts, without and with the log annual hours control. Bar length is the total gap; segments sum to it.
+:::
+
+\newpage
+
+\newpage
+
+# References {.unnumbered}
+
+::: {#refs}
+:::

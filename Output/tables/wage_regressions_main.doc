@@ -1,0 +1,32 @@
+{\rtf1\fs24
+\pard\qc
+Log Annual Wage: Gender and Citizenship\par
+\trowd\trgaph75\trleft-75\intbl\trqc\clbrdrt\brdrs\cellx6336\clbrdrt\brdrs\cellx8352\clbrdrt\brdrs\cellx11088\clbrdrt\brdrs\cellx12960\clbrdrt\brdrs\cellx14544\clbrdrt\brdrs\cellx16128\clbrdrt\brdrs\cellx18864
+\ql \cell\qc (1)\cell\qc (2)\cell\qc (3)\cell\qc (4)\cell\qc (5)\cell\qc (6)\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx6336\cellx8352\cellx11088\cellx12960\cellx14544\cellx16128\cellx18864
+\ql \cell\qc \cell\qc \cell\qc M3 + marital\cell\qc \cell\qc \cell\qc \cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx6336\cellx8352\cellx11088\cellx12960\cellx14544\cellx16128\cellx18864
+\trowd\trgaph75\trleft-75\trqc\clbrdrb\brdrs\cellx6336\clbrdrb\brdrs\cellx8352\clbrdrb\brdrs\cellx11088\clbrdrb\brdrs\cellx12960\clbrdrb\brdrs\cellx14544\clbrdrb\brdrs\cellx16128\clbrdrb\brdrs\cellx18864
+\ql VARIABLES\cell\qc M1 Unadjusted\cell\qc M2 + human capital\cell\qc kids<5\cell\qc M4 + hours\cell\qc M5 full FE\cell\qc M6 full FE + hours\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx6336\cellx8352\cellx11088\cellx12960\cellx14544\cellx16128\cellx18864
+\ql \cell\qc \cell\qc \cell\qc \cell\qc \cell\qc \cell\qc \cell\row
+\ql Citizenship Status = 1, Naturalized Citizen\cell\qc 0.117***\cell\qc 0.030**\cell\qc 0.004\cell\qc 0.025**\cell\qc -0.004\cell\qc -0.002\cell\row
+\ql \cell\qc (0.025)\cell\qc (0.012)\cell\qc (0.012)\cell\qc (0.012)\cell\qc (0.017)\cell\qc (0.013)\cell\row
+\ql Citizenship Status = 2, Non-Citizen\cell\qc -0.263***\cell\qc -0.033**\cell\qc -0.058***\cell\qc -0.035**\cell\qc -0.071***\cell\qc -0.059***\cell\row
+\ql \cell\qc (0.029)\cell\qc (0.016)\cell\qc (0.016)\cell\qc (0.014)\cell\qc (0.018)\cell\qc (0.014)\cell\row
+\ql sex = 2, female\cell\qc -0.386***\cell\qc -0.423***\cell\qc -0.542***\cell\qc -0.299***\cell\qc -0.461***\cell\qc -0.260***\cell\row
+\ql \cell\qc (0.011)\cell\qc (0.011)\cell\qc (0.011)\cell\qc (0.007)\cell\qc (0.009)\cell\qc (0.006)\cell\row
+\ql 1.citizen_cat#2.sex\cell\qc 0.022\cell\qc 0.045**\cell\qc 0.088***\cell\qc 0.051***\cell\qc 0.067***\cell\qc 0.040***\cell\row
+\ql \cell\qc (0.019)\cell\qc (0.020)\cell\qc (0.019)\cell\qc (0.012)\cell\qc (0.017)\cell\qc (0.011)\cell\row
+\ql 2.citizen_cat#2.sex\cell\qc -0.021\cell\qc -0.023\cell\qc -0.006\cell\qc 0.021**\cell\qc -0.012\cell\qc 0.016*\cell\row
+\ql \cell\qc (0.016)\cell\qc (0.014)\cell\qc (0.014)\cell\qc (0.010)\cell\qc (0.012)\cell\qc (0.008)\cell\row
+\ql Constant\cell\qc 10.630***\cell\qc 10.625***\cell\qc 10.777***\cell\qc 3.005***\cell\qc 10.762***\cell\qc 3.217***\cell\row
+\ql \cell\qc (0.022)\cell\qc (0.014)\cell\qc (0.015)\cell\qc (0.037)\cell\qc (0.007)\cell\qc (0.035)\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc \cell\qc \cell\qc \cell\row
+\ql Observations\cell\qc 512,807\cell\qc 512,807\cell\qc 512,807\cell\qc 512,807\cell\qc 512,807\cell\qc 512,807\cell\row
+\trowd\trgaph75\trleft-75\trqc\trbrdrb\brdrs\clbrdrb\brdrs\cellx6336\clbrdrb\brdrs\cellx8352\clbrdrb\brdrs\cellx11088\clbrdrb\brdrs\cellx12960\clbrdrb\brdrs\cellx14544\clbrdrb\brdrs\cellx16128\clbrdrb\brdrs\cellx18864
+\ql R-squared\cell\qc 0.042\cell\qc 0.344\cell\qc 0.356\cell\qc 0.668\cell\qc 0.409\cell\qc 0.698\cell\row
+\pard\qc
+Robust standard errors in parentheses\par
+*** p<0.01, ** p<0.05, * p<0.1\par
+}

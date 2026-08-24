@@ -1,40 +1,22 @@
-# ---------------------------------------------------------------------------
 # Data
-# ---------------------------------------------------------------------------
-# IPUMS USA microdata is NOT redistributable under the IPUMS terms of use, and
-# the raw extract exceeds GitHub's 100 MB per-file limit regardless. Anyone
-# replicating this project must pull their own extract; see Data/README.md for
-# the exact sample, years, and variable list needed.
-# (Directories are re-included via `!Data/**/` so that git can descend into
-# them to find the .gitkeep placeholders; git cannot re-include a file whose
-# parent directory is itself excluded.)
 Data/**
 !Data/**/
 !Data/README.md
 !Data/**/.gitkeep
 
-# Any stray data files placed outside Data/
 *.dta
 *.dta.gz
 *.csv.gz
 *.sav
 *.por
 
-# ---------------------------------------------------------------------------
 # Stata
-# ---------------------------------------------------------------------------
-# Editor swap files (e.g. ~01_Data_Cleaning.do.stswp)
 ~*.stswp
 *.stswp
-# Saved estimates and temporary matrices
 *.ster
 *.stbcal
-# Note: .log files are intentionally NOT ignored. They are committed as a
-# record of the exact output behind the tables in the paper.
 
-# ---------------------------------------------------------------------------
 # R / RStudio
-# ---------------------------------------------------------------------------
 .Rproj.user/
 .Rhistory
 .RData
@@ -42,15 +24,11 @@ Data/**
 .Renviron
 *.Rproj.user
 
-# ---------------------------------------------------------------------------
 # Quarto
-# ---------------------------------------------------------------------------
 /.quarto/
 *_cache/
 
-# ---------------------------------------------------------------------------
 # LaTeX intermediates (Paper/)
-# ---------------------------------------------------------------------------
 *.aux
 *.bbl
 *.blg
@@ -62,9 +40,7 @@ Data/**
 *.synctex.gz
 *.toc
 
-# ---------------------------------------------------------------------------
 # OS / editor cruft
-# ---------------------------------------------------------------------------
 .DS_Store
 **/.DS_Store
 Thumbs.db
@@ -72,3 +48,4 @@ Thumbs.db
 .idea/
 *~
 *.swp
+.positai

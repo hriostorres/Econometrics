@@ -1,0 +1,21 @@
+Sensitivity Analyses					
+		(1)	(2)	(3)	(4)
+VARIABLES	LABELS	Hourly DV	FTFY subsample	Rich hours controls	No topcoded hours
+					
+1.citizen_cat	Citizenship Status = 1, Naturalized Citizen	-0.002	-0.016	-0.002	-0.002
+		(0.013)	(0.015)	(0.013)	(0.013)
+2.citizen_cat	Citizenship Status = 2, Non-Citizen	-0.058***	-0.070***	-0.059***	-0.059***
+		(0.014)	(0.015)	(0.014)	(0.013)
+2.sex	sex = 2, female	-0.255***	-0.294***	-0.240***	-0.260***
+		(0.006)	(0.006)	(0.005)	(0.006)
+1.citizen_cat#2.sex		0.040***	0.058***	0.040***	0.041***
+		(0.011)	(0.014)	(0.011)	(0.011)
+2.citizen_cat#2.sex		0.016*	0.020**	0.020**	0.016*
+		(0.008)	(0.010)	(0.009)	(0.008)
+Constant	Constant	3.049***	10.812***	4.012***	3.207***
+		(0.005)	(0.005)	(0.036)	(0.035)
+					
+Observations		512,807	378,287	512,807	512,271
+R-squared		0.380	0.418	0.705	0.699
+Robust standard errors in parentheses					
+*** p<0.01, ** p<0.05, * p<0.1					
